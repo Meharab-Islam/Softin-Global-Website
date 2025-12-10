@@ -104,6 +104,57 @@
   gap: 2rem;
 }
 
+.see-more-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  animation: fadeInUp 0.6s ease;
+}
+
+.btn-see-more {
+  padding: 1rem 2.5rem;
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  border-radius: 50px;
+  color: var(--primary-color);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-see-more::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-1);
+  transition: left 0.3s ease;
+  z-index: -1;
+}
+
+.btn-see-more:hover {
+  color: white;
+  border-color: transparent;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+}
+
+.btn-see-more:hover::before {
+  left: 0;
+}
+
+.btn-see-more:hover {
+  gap: 1rem;
+}
+
 .contact-content {
   display: grid;
   grid-template-columns: 1fr 1fr;

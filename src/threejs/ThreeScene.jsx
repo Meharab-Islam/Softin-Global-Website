@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { initScene } from './sceneSetup';
-import { createParticles } from './particles';
-import { createShapes } from './shapes';
+import { createParticles, createParticleConnections } from './particles';
+import { createShapes, createWavePlane } from './shapes';
 import { createLights } from './lights';
 import { animateScene } from './animation';
 
@@ -19,14 +19,20 @@ export default function ThreeScene() {
     const particles = createParticles();
     scene.add(particles);
 
+    const connections = createParticleConnections(particles, 4);
+    scene.add(connections);
+
     const shapes = createShapes();
     shapes.forEach(shape => scene.add(shape));
+
+    const wavePlane = createWavePlane();
+    scene.add(wavePlane);
 
     const lights = createLights();
     lights.forEach(light => scene.add(light));
 
     // Start animation
-    const cleanup = animateScene(scene, camera, renderer, particles, shapes);
+    const cleanup = animateScene(scene, camera, renderer, particles, shapes, connections, wavePlane);
 
     // Handle resize
     const handleResize = () => {
