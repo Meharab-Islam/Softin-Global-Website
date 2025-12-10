@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { updateScrollEffects } from './scrollEffects';
 
 let mouse = { x: 0, y: 0 };
 let scrollY = 0;
@@ -16,43 +17,37 @@ export function animateScene(scene, camera, renderer, particles, shapes, connect
   };
 
   window.addEventListener('mousemove', handleMouseMove);
-  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('scroll', handleScroll, { passive: true });
 
   function animate() {
     animationId = requestAnimationFrame(animate);
-    time += 0.01;
+    time += 0.015;
 
-    // Update camera based on scroll and mouse
-    camera.position.y = scrollY * 0.001 + mouse.y * 0.5;
-    camera.rotation.x = scrollY * 0.0001 + mouse.y * 0.05;
+    const windowHeight = window.innerHeight;
+    
+    // Enhanced scroll-based effects
+    updateScrollEffects(scene, camera, particles, shapes, wavePlane, scrollY, windowHeight);
+
+    // Update camera based on mouse (smooth follow)
     camera.position.x += (mouse.x * 0.8 - camera.position.x) * 0.05;
     camera.lookAt(scene.position);
 
-    // Animate particles with wave effect
+    // Animate particles with wave effect (adds to scroll effects)
     if (particles && particles.geometry) {
       const positions = particles.geometry.attributes.position.array;
-      const velocities = particles.userData.velocities;
       const originalPositions = particles.userData.originalPositions;
 
       for (let i = 0; i < positions.length; i += 3) {
         const index = i / 3;
-        const waveX = Math.sin(time * 0.5 + index * 0.1) * 0.5;
-        const waveY = Math.cos(time * 0.7 + index * 0.15) * 0.5;
-        const waveZ = Math.sin(time * 0.6 + index * 0.12) * 0.5;
-
-        positions[i] = originalPositions[i] + waveX + mouse.x * 2;
-        positions[i + 1] = originalPositions[i + 1] + waveY + mouse.y * 2;
-        positions[i + 2] = originalPositions[i + 2] + waveZ;
-
-        // Update velocities for smooth motion
-        velocities[i] += (Math.random() - 0.5) * 0.001;
-        velocities[i + 1] += (Math.random() - 0.5) * 0.001;
-        velocities[i + 2] += (Math.random() - 0.5) * 0.001;
-
-        // Damping
-        velocities[i] *= 0.99;
-        velocities[i + 1] *= 0.99;
-        velocities[i + 2] *= 0.99;
+        // Add time-based wave on top of scroll effects
+        const waveX = Math.sin(time * 0.5 + index * 0.1) * 0.3;
+        const waveY = Math.cos(time * 0.7 + index * 0.15) * 0.3;
+        
+        // Mouse interaction
+        positions[i] += mouse.x * 1.5;
+        positions[i + 1] += mouse.y * 1.5;
+        positions[i] += waveX;
+        positions[i + 1] += waveY;
       }
       particles.geometry.attributes.position.needsUpdate = true;
     }
@@ -79,13 +74,21 @@ export function animateScene(scene, camera, renderer, particles, shapes, connect
         const floatY = Math.sin(time * shape.userData.floatSpeed + shape.userData.index) * 
                       shape.userData.floatAmount;
 
+        // Base orbital position
         shape.position.x = x + mouse.x * 1.5;
         shape.position.y = shape.userData.originalPosition[1] + floatY + mouse.y * 1.5;
-        shape.position.z = z + scrollY * 0.01 - 10;
+        // Z is handled by scroll effects, preserve scroll offset
+        if (shape.userData.scrollZ !== undefined) {
+          shape.position.z = z + shape.userData.scrollZ;
+        } else {
+          shape.position.z = z - 10;
+        }
 
-        // Pulsing scale
-        const scale = 1 + Math.sin(time * 2 + shape.userData.index) * 0.1;
-        shape.scale.set(scale, scale, scale);
+        // Combined scale: time-based pulse + scroll-based scale
+        const timeScale = 1 + Math.sin(time * 2 + shape.userData.index) * 0.05;
+        const scrollScale = shape.userData.scrollScale || 1;
+        const finalScale = timeScale * scrollScale;
+        shape.scale.set(finalScale, finalScale, finalScale);
       }
     });
 

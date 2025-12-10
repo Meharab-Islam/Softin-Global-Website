@@ -7,6 +7,7 @@ import ProductsSection from '../components/sections/ProductsSection';
 import BlogsSection from '../components/sections/BlogsSection';
 import ContactSection from '../components/sections/ContactSection';
 import { loadServices, loadWorks, loadProducts, loadBlogs } from '../utils/dataLoader';
+import { initSectionAnimations } from '../utils/sectionAnimations';
 import './Home.css';
 
 export default function Home() {
@@ -38,6 +39,15 @@ export default function Home() {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      // Initialize section animations after content loads
+      setTimeout(() => {
+        initSectionAnimations();
+      }, 100);
+    }
+  }, [loading]);
 
   const handleContactSubmit = (e) => {
     e.preventDefault();

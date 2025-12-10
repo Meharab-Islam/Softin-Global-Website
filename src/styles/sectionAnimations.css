@@ -1,0 +1,174 @@
+/* Section-specific animation styles */
+
+.section {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.section-visible {
+  opacity: 1;
+}
+
+/* Hero Section Animations */
+.hero-animate .title-line {
+  animation: slideInLeft 1s ease forwards;
+}
+
+.hero-animate .hero-subtitle {
+  animation: fadeInUp 1.2s ease 0.3s forwards;
+}
+
+.hero-animate .hero-buttons {
+  animation: fadeInUp 1.4s ease 0.6s forwards;
+}
+
+/* Services Section Animations */
+.services-animate .service-card {
+  opacity: 0;
+  transform: translateY(50px) rotateX(20deg);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.services-animate .service-card:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.services-animate .service-card:nth-child(2) {
+  transition-delay: 0.2s;
+}
+
+.services-animate .service-card:nth-child(3) {
+  transition-delay: 0.3s;
+}
+
+.services-animate .service-card:nth-child(4) {
+  transition-delay: 0.4s;
+}
+
+/* Works Section Animations */
+.works-animate .work-card {
+  opacity: 0;
+  transform: scale(0.8) translateX(-100px);
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.works-animate .work-card:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.works-animate .work-card:nth-child(2) {
+  transition-delay: 0.2s;
+}
+
+.works-animate .work-card:nth-child(3) {
+  transition-delay: 0.3s;
+}
+
+/* Products Section Animations */
+.products-animate .product-card {
+  opacity: 0;
+  transform: scale(0.8) translateX(100px) rotateY(-20deg);
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.products-animate .product-card:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.products-animate .product-card:nth-child(2) {
+  transition-delay: 0.2s;
+}
+
+.products-animate .product-card:nth-child(3) {
+  transition-delay: 0.3s;
+}
+
+/* Blogs Section Animations */
+.blogs-animate .blog-card {
+  opacity: 0;
+  transform: translateY(100px) rotateZ(5deg);
+  transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.blogs-animate .blog-card:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.blogs-animate .blog-card:nth-child(2) {
+  transition-delay: 0.2s;
+}
+
+.blogs-animate .blog-card:nth-child(3) {
+  transition-delay: 0.3s;
+}
+
+/* Contact Section Animations */
+.contact-animate .contact-item,
+.contact-animate .contact-form input,
+.contact-animate .contact-form textarea {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.6s ease;
+}
+
+.contact-animate .contact-item:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.contact-animate .contact-item:nth-child(2) {
+  transition-delay: 0.2s;
+}
+
+.contact-animate .contact-item:nth-child(3) {
+  transition-delay: 0.3s;
+}
+
+.contact-animate .contact-form input:nth-child(1),
+.contact-animate .contact-form textarea:nth-child(1) {
+  transition-delay: 0.4s;
+}
+
+.contact-animate .contact-form input:nth-child(2),
+.contact-animate .contact-form textarea:nth-child(2) {
+  transition-delay: 0.5s;
+}
+
+.contact-animate .contact-form input:nth-child(3),
+.contact-animate .contact-form textarea:nth-child(3) {
+  transition-delay: 0.6s;
+}
+
+.contact-animate .contact-form button {
+  transition-delay: 0.7s;
+}
+
+/* When section becomes visible, trigger animations */
+.section-visible.services-animate .service-card,
+.section-visible.works-animate .work-card,
+.section-visible.products-animate .product-card,
+.section-visible.blogs-animate .blog-card {
+  opacity: 1;
+  transform: scale(1) translateX(0) translateY(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+
+.section-visible.contact-animate .contact-item,
+.section-visible.contact-animate .contact-form input,
+.section-visible.contact-animate .contact-form textarea,
+.section-visible.contact-animate .contact-form button {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Section header animations */
+.section-visible .section-header {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.section-visible .section-title {
+  animation: fadeInUp 0.8s ease 0.2s forwards;
+}
+
+.section-visible .section-subtitle {
+  animation: fadeInUp 0.8s ease 0.4s forwards;
+}
+
