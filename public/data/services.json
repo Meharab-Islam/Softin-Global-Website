@@ -1,0 +1,55 @@
+[
+  {
+    "id": 1,
+    "title": "App Development",
+    "description": "We create powerful, user-friendly mobile applications for iOS and Android platforms. Our apps are built with cutting-edge technologies and best practices.",
+    "icon": "📱",
+    "features": [
+      "Native iOS & Android Development",
+      "Cross-platform Solutions",
+      "UI/UX Design",
+      "App Store Optimization",
+      "Maintenance & Support"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Web Development",
+    "description": "Custom web solutions that are fast, secure, and scalable. From simple websites to complex web applications, we deliver excellence.",
+    "icon": "🌐",
+    "features": [
+      "Responsive Design",
+      "E-commerce Solutions",
+      "Progressive Web Apps",
+      "API Integration",
+      "Performance Optimization"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Management Software Building",
+    "description": "Comprehensive management software tailored to your business needs. Streamline operations and boost productivity with our custom solutions.",
+    "icon": "⚙️",
+    "features": [
+      "Custom Workflow Design",
+      "Data Analytics & Reporting",
+      "Integration Capabilities",
+      "Cloud-based Solutions",
+      "User Training & Support"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Business Management Software",
+    "description": "End-to-end business management solutions that help you manage every aspect of your business efficiently and effectively.",
+    "icon": "💼",
+    "features": [
+      "CRM Integration",
+      "Inventory Management",
+      "Financial Tracking",
+      "Team Collaboration",
+      "Real-time Dashboards"
+    ]
+  }
+]
+

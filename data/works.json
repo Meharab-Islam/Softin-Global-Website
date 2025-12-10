@@ -1,0 +1,99 @@
+[
+  {
+    "id": 1,
+    "title": "E-Commerce Platform",
+    "category": "Web Development",
+    "description": "A full-featured e-commerce platform with advanced inventory management, payment integration, and analytics dashboard.",
+    "image": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800",
+    "technologies": ["React", "Node.js", "MongoDB", "Stripe API"],
+    "client": "Retail Corp",
+    "year": "2024",
+    "duration": "6 months",
+    "results": {
+      "revenue": "+250%",
+      "users": "50K+",
+      "satisfaction": "98%"
+    }
+  },
+  {
+    "id": 2,
+    "title": "Healthcare Management System",
+    "category": "Management Software",
+    "description": "Comprehensive healthcare management system for hospitals with patient records, appointment scheduling, and billing integration.",
+    "image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800",
+    "technologies": ["Vue.js", "Python", "PostgreSQL", "Docker"],
+    "client": "City Hospital",
+    "year": "2023",
+    "duration": "8 months",
+    "results": {
+      "efficiency": "+180%",
+      "patients": "100K+",
+      "satisfaction": "95%"
+    }
+  },
+  {
+    "id": 3,
+    "title": "Fitness Tracking App",
+    "category": "App Development",
+    "description": "Mobile fitness app with workout plans, progress tracking, social features, and integration with wearable devices.",
+    "image": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800",
+    "technologies": ["React Native", "Firebase", "GraphQL", "Apple Health"],
+    "client": "FitLife Inc",
+    "year": "2024",
+    "duration": "4 months",
+    "results": {
+      "downloads": "500K+",
+      "rating": "4.8/5",
+      "active_users": "200K+"
+    }
+  },
+  {
+    "id": 4,
+    "title": "ERP System",
+    "category": "Business Management",
+    "description": "Enterprise Resource Planning system for manufacturing companies with production, inventory, and financial modules.",
+    "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800",
+    "technologies": ["Angular", ".NET", "SQL Server", "Azure"],
+    "client": "Manufacturing Co",
+    "year": "2023",
+    "duration": "10 months",
+    "results": {
+      "productivity": "+200%",
+      "cost_reduction": "-35%",
+      "satisfaction": "97%"
+    }
+  },
+  {
+    "id": 5,
+    "title": "Real Estate Portal",
+    "category": "Web Development",
+    "description": "Modern real estate platform with property listings, virtual tours, mortgage calculator, and agent management.",
+    "image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800",
+    "technologies": ["Next.js", "TypeScript", "Prisma", "AWS"],
+    "client": "RealEstate Pro",
+    "year": "2024",
+    "duration": "5 months",
+    "results": {
+      "listings": "10K+",
+      "visitors": "1M+",
+      "conversion": "+150%"
+    }
+  },
+  {
+    "id": 6,
+    "title": "Food Delivery App",
+    "category": "App Development",
+    "description": "Food delivery application with real-time tracking, multiple payment options, and restaurant management dashboard.",
+    "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800",
+    "technologies": ["Flutter", "Node.js", "MongoDB", "Socket.io"],
+    "client": "Foodie Express",
+    "year": "2023",
+    "duration": "7 months",
+    "results": {
+      "orders": "1M+",
+      "restaurants": "500+",
+      "rating": "4.7/5"
+    }
+  }
+]
+

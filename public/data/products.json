@@ -1,0 +1,117 @@
+[
+  {
+    "id": 1,
+    "name": "SoftinCRM",
+    "category": "Business Management",
+    "description": "Comprehensive Customer Relationship Management software designed to help businesses manage customer interactions, sales pipelines, and marketing campaigns.",
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800",
+    "price": "$99/month",
+    "features": [
+      "Contact Management",
+      "Sales Pipeline Tracking",
+      "Email Marketing",
+      "Analytics Dashboard",
+      "Mobile App",
+      "API Integration"
+    ],
+    "rating": 4.8,
+    "reviews": 1250,
+    "launch_date": "2023-01-15"
+  },
+  {
+    "id": 2,
+    "name": "SoftinERP",
+    "category": "Management Software",
+    "description": "Enterprise Resource Planning solution for small to medium businesses. Manage inventory, finances, HR, and operations all in one place.",
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800",
+    "price": "$299/month",
+    "features": [
+      "Inventory Management",
+      "Financial Accounting",
+      "HR Management",
+      "Project Management",
+      "Reporting & Analytics",
+      "Multi-user Access"
+    ],
+    "rating": 4.6,
+    "reviews": 890,
+    "launch_date": "2022-08-20"
+  },
+  {
+    "id": 3,
+    "name": "SoftinPOS",
+    "category": "Business Management",
+    "description": "Point of Sale system for retail businesses with inventory tracking, sales reporting, and customer management features.",
+    "image": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800",
+    "price": "$79/month",
+    "features": [
+      "Barcode Scanning",
+      "Receipt Printing",
+      "Inventory Sync",
+      "Sales Reports",
+      "Customer Database",
+      "Multi-payment Support"
+    ],
+    "rating": 4.7,
+    "reviews": 2100,
+    "launch_date": "2023-05-10"
+  },
+  {
+    "id": 4,
+    "name": "SoftinHR",
+    "category": "Management Software",
+    "description": "Human Resources management platform with employee onboarding, attendance tracking, payroll, and performance management.",
+    "image": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800",
+    "price": "$149/month",
+    "features": [
+      "Employee Database",
+      "Attendance Tracking",
+      "Payroll Management",
+      "Performance Reviews",
+      "Leave Management",
+      "Document Management"
+    ],
+    "rating": 4.5,
+    "reviews": 750,
+    "launch_date": "2023-11-01"
+  },
+  {
+    "id": 5,
+    "name": "SoftinAnalytics",
+    "category": "Business Management",
+    "description": "Business intelligence and analytics platform that transforms your data into actionable insights with beautiful visualizations.",
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800",
+    "price": "$199/month",
+    "features": [
+      "Data Visualization",
+      "Custom Dashboards",
+      "Real-time Reports",
+      "Data Export",
+      "API Integration",
+      "Automated Alerts"
+    ],
+    "rating": 4.9,
+    "reviews": 650,
+    "launch_date": "2024-02-15"
+  },
+  {
+    "id": 6,
+    "name": "SoftinProject",
+    "category": "Management Software",
+    "description": "Project management tool for teams to collaborate, track progress, manage tasks, and deliver projects on time.",
+    "image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800",
+    "price": "$129/month",
+    "features": [
+      "Task Management",
+      "Team Collaboration",
+      "Gantt Charts",
+      "Time Tracking",
+      "File Sharing",
+      "Progress Reports"
+    ],
+    "rating": 4.7,
+    "reviews": 1100,
+    "launch_date": "2023-09-12"
+  }
+]
+
