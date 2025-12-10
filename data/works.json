@@ -20,7 +20,7 @@
     "title": "Healthcare Management System",
     "category": "Management Software",
     "description": "Comprehensive healthcare management system for hospitals with patient records, appointment scheduling, and billing integration.",
-    "image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800",
+    "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800",
     "technologies": ["Vue.js", "Python", "PostgreSQL", "Docker"],
     "client": "City Hospital",
     "year": "2023",

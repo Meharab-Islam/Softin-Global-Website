@@ -33,10 +33,10 @@ export function createParticles() {
   geometry.setAttribute('velocity', new THREE.BufferAttribute(velocities, 3));
 
   const material = new THREE.PointsMaterial({
-    size: 0.15,
+    size: 0.1,
     vertexColors: true,
     transparent: true,
-    opacity: 0.8,
+    opacity: 0.6,
     blending: THREE.AdditiveBlending,
     sizeAttenuation: true
   });

@@ -67,11 +67,27 @@ body {
   height: 100%;
   z-index: -1;
   pointer-events: none;
+  background: radial-gradient(ellipse at center, #1e293b 0%, #0f172a 50%, #0a0f1a 100%);
 }
 
 .app {
   position: relative;
   min-height: 100vh;
+}
+
+.main-content {
+  position: relative;
+  z-index: 1;
+}
+
+.loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  z-index: 1000;
 }
 
 .container {

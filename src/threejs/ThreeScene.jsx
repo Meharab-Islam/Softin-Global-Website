@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { initScene } from './sceneSetup';
-import { createParticles, createParticleConnections } from './particles';
-import { createShapes, createWavePlane } from './shapes';
+import { createBackground } from './background';
 import { createLights } from './lights';
 import { animateScene } from './animation';
 
@@ -10,29 +9,30 @@ export default function ThreeScene() {
   const sceneRef = useRef(null);
 
   useEffect(() => {
-    if (!canvasRef.current) return;
+    if (!canvasRef.current) {
+      console.error('Canvas ref is null');
+      return;
+    }
 
-    const { scene, camera, renderer } = initScene(canvasRef.current);
-    sceneRef.current = { scene, camera, renderer };
+    try {
+      const { scene, camera, renderer } = initScene(canvasRef.current);
+      sceneRef.current = { scene, camera, renderer };
 
-    // Create scene elements
-    const particles = createParticles();
-    scene.add(particles);
+      // Clear any existing objects from scene
+      while(scene.children.length > 0) {
+        scene.remove(scene.children[0]);
+      }
 
-    const connections = createParticleConnections(particles, 4);
-    scene.add(connections);
+      // Add professional background
+      const background = createBackground();
+      scene.add(background);
 
-    const shapes = createShapes();
-    shapes.forEach(shape => scene.add(shape));
+      // Add enhanced lighting
+      const lights = createLights();
+      lights.forEach(light => scene.add(light));
 
-    const wavePlane = createWavePlane();
-    scene.add(wavePlane);
-
-    const lights = createLights();
-    lights.forEach(light => scene.add(light));
-
-    // Start animation
-    const cleanup = animateScene(scene, camera, renderer, particles, shapes, connections, wavePlane);
+      // Start animation
+      const cleanup = animateScene(scene, camera, renderer, background);
 
     // Handle resize
     const handleResize = () => {
@@ -43,13 +43,28 @@ export default function ThreeScene() {
 
     window.addEventListener('resize', handleResize);
 
-    return () => {
-      cleanup();
-      window.removeEventListener('resize', handleResize);
-      renderer.dispose();
-    };
+      return () => {
+        cleanup();
+        window.removeEventListener('resize', handleResize);
+        // Clean up scene
+        while(scene.children.length > 0) {
+          const child = scene.children[0];
+          if (child.geometry) child.geometry.dispose();
+          if (child.material) {
+            if (Array.isArray(child.material)) {
+              child.material.forEach(m => m.dispose());
+            } else {
+              child.material.dispose();
+            }
+          }
+          scene.remove(child);
+        }
+        renderer.dispose();
+      };
+    } catch (error) {
+      console.error('Error initializing Three.js scene:', error);
+    }
   }, []);
 
   return <canvas ref={canvasRef} id="three-canvas" />;
 }
-
