@@ -9,29 +9,57 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const [isVisible, setIsVisible] = useState(true);
+  const [activeSection, setActiveSection] = useState('home');
+
   useEffect(() => {
+    let lastScrollY = window.scrollY;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > 50);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Scroll Spy Logic
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-50% 0px -50% 0px', // Active when element is in middle of screen
+      threshold: 0
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Observe all sections
+    const sections = ['hero', 'services', 'works', 'products', 'blogs', 'contact'];
+    sections.forEach(id => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
-  };
-
-  const isActive = (path) => {
-    if (path === '/') {
-      return location.pathname === '/';
-    }
-    return location.pathname.startsWith(path);
   };
 
   const handleSectionClick = (e, sectionId) => {
     closeMobileMenu();
     e.preventDefault();
+    setActiveSection(sectionId); // Instant update on click
 
     if (location.pathname !== '/') {
       navigate('/');
@@ -55,18 +83,18 @@ export default function Navbar() {
         </div>
         <ul className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
           <li>
-            <Link
-              to="/"
-              className={`nav-link ${isActive('/') ? 'active' : ''}`}
-              onClick={closeMobileMenu}
+            <a
+              href="#hero"
+              className={`nav-link ${activeSection === 'hero' ? 'active' : ''}`}
+              onClick={(e) => handleSectionClick(e, 'hero')}
             >
               Home
-            </Link>
+            </a>
           </li>
           <li>
             <a
               href="#services"
-              className="nav-link"
+              className={`nav-link ${activeSection === 'services' ? 'active' : ''}`}
               onClick={(e) => handleSectionClick(e, 'services')}
             >
               Services
@@ -75,7 +103,7 @@ export default function Navbar() {
           <li>
             <a
               href="#works"
-              className="nav-link"
+              className={`nav-link ${activeSection === 'works' ? 'active' : ''}`}
               onClick={(e) => handleSectionClick(e, 'works')}
             >
               Our Works
@@ -84,7 +112,7 @@ export default function Navbar() {
           <li>
             <a
               href="#products"
-              className="nav-link"
+              className={`nav-link ${activeSection === 'products' ? 'active' : ''}`}
               onClick={(e) => handleSectionClick(e, 'products')}
             >
               Products
@@ -93,7 +121,7 @@ export default function Navbar() {
           <li>
             <a
               href="#blogs"
-              className="nav-link"
+              className={`nav-link ${activeSection === 'blogs' ? 'active' : ''}`}
               onClick={(e) => handleSectionClick(e, 'blogs')}
             >
               Blogs
@@ -102,7 +130,7 @@ export default function Navbar() {
           <li>
             <a
               href="#contact"
-              className="nav-link"
+              className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`}
               onClick={(e) => handleSectionClick(e, 'contact')}
             >
               Contact

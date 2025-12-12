@@ -1,41 +1,59 @@
 .navbar {
   position: fixed;
-  top: 0;
-  width: 100%;
-  padding: 1.5rem 0;
-  background: rgba(10, 14, 19, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  z-index: 1000;
-  transition: all 0.3s ease;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.navbar.scrolled {
-  padding: 1rem 0;
-  background: linear-gradient(90deg, rgba(10, 14, 19, 0.9) 0%, rgba(20, 25, 35, 0.9) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.nav-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  top: 20px;
+  /* Floating from top */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1000px;
+  /* Limit width for pill look */
+  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: rgba(10, 10, 20, 0.6);
+  /* Flat semi-transparent */
+  backdrop-filter: blur(15px);
+  border-radius: 50px;
+  /* Pill shape */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.navbar.scrolled {
+  padding: 0.8rem 2rem;
+  width: 80%;
+  /* Shrink width */
+  max-width: 900px;
+  background: rgba(10, 10, 20, 0.95);
+  /* Darker and more solid */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.navbar-hidden {
+  top: -100px;
+  /* Slide out of view */
+  opacity: 0;
+}
+
+.nav-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  /* Ensure minimum gap */
 }
 
 .logo-text {
   font-size: 1.5rem;
   font-weight: 700;
-  background: var(--gradient-1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #fff;
+  /* Flat white */
+  /* Gradient removed */
 }
 
 .nav-menu {
@@ -59,7 +77,8 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--gradient-1);
+  background: #aaccff;
+  /* Flat blue */
   transition: width 0.3s ease;
 }
 

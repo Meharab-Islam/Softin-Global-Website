@@ -1,11 +1,11 @@
 .work-card {
-  background: rgba(26, 31, 46, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 20px;
+  border-radius: 16px;
   overflow: hidden;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  background: rgba(30, 30, 40, 0.8);
+  /* Solid visible background */
+  /* Flat background */
+  border: 1px solid rgba(255, 255, 255, 0.05);
   cursor: pointer;
 }
 
@@ -32,7 +32,8 @@
 .work-category {
   display: inline-block;
   padding: 0.5rem 1rem;
-  background: var(--gradient-1);
+  background: rgba(50, 50, 80, 0.8);
+  /* Flat color */
   border-radius: 20px;
   font-size: 0.875rem;
   font-weight: 600;

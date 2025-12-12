@@ -23,7 +23,8 @@ export function initScene(canvas) {
   scene.add(ambientLight);
 
   // Fog for depth (Moon atmosphere)
-  scene.fog = new THREE.FogExp2(0x050510, 0.015); // Dark blue-ish grey fog
+  // Reduced density to see the stars clearly
+  scene.fog = new THREE.FogExp2(0x050510, 0.002);
 
   const renderer = new THREE.WebGLRenderer({
     canvas: canvas,

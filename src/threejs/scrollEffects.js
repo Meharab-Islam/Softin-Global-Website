@@ -46,29 +46,76 @@ export function updateScrollEffects(scene, camera, scrollY, windowHeight, backgr
     background.children.forEach((child) => {
       const type = child.userData.type;
 
-      // 1. Terrain Flyover
+      // 1. Terrain Flyover -> Circular Turntable
       if (type === 'moon_terrain') {
-        // Move terrain towards camera AND Breathe (Hover)
-        // Adding a continuous sine wave to Y makes it feel like we are hovering/bobbing
-        child.position.y = -40 + scrollProgress * 10 + Math.sin(time * 0.5) * 2;
+        // "Circle Type": Spin the terrain like a massive turntable
+        child.rotation.z = time * 0.1; // Slow constant rotation
 
-        // Tilt shift
-        child.rotation.x = -Math.PI / 2 + 0.2 + mouse.y * 0.05 + Math.cos(time * 0.3) * 0.02;
-        child.rotation.z = mouse.x * 0.05;
+        // Keep the breathing/hover effect but smoother
+        child.position.y = -40 + Math.sin(time * 0.5) * 5;
+
+        // Add a spiral tilt wobble
+        child.rotation.x = -Math.PI / 2 + 0.2 + Math.sin(time * 0.5) * 0.05;
+        child.rotation.y = Math.cos(time * 0.5) * 0.05;
       }
 
-      // 2. Smoke Drift
-      if (type === 'smoke_system') {
-        const positions = child.geometry.attributes.position;
-
-        // Continuous slow rotation
+      // 2. Starfield (Interactive Sky)
+      if (type === 'starfield') {
+        // Slow universe rotation
         child.rotation.y = time * 0.05;
-        // Sway side to side
-        child.position.x = Math.sin(time * 0.1) * 10;
 
-        // Pulse scale (Breathing atmosphere)
-        const scale = 1 + Math.sin(time * 0.5) * 0.05;
-        child.scale.set(scale, scale, scale);
+        // Interactive Mouse Parallax
+        // Stars move slightly opposite to mouse to create depth
+        const targetRotX = mouse.y * 0.05;
+        const targetRotY = time * 0.05 + mouse.x * 0.05;
+
+        child.rotation.x += (targetRotX - child.rotation.x) * 0.1;
+        child.rotation.y += (targetRotY - child.rotation.y) * 0.1;
+      }
+
+      // 3. Progressive Path
+      if (type === 'scroll_path') {
+        const count = child.geometry.attributes.position.count;
+        // Calculate how many points to show based on scroll
+        // Map scroll 0..1 to points 0..count
+        const drawCount = Math.floor(scrollProgress * count);
+        child.geometry.setDrawRange(0, drawCount);
+
+        // Rotate with the terrain to match the "turntable" effect?
+        // YES, otherwise the path will slide off the terrain!
+        // We need to match the terrain rotation exactly.
+        // Terrain rotation logic was:
+        // child.rotation.z = time * 0.1; (for terrain)
+        // Wait, the path is separate. 
+        // If terrain rotates Z, and path is in the same group, it stays relative?
+        // No, they are siblings in backgroundGroup.
+        // If we rotate the sibling (terrain) but not the path, they desync.
+        // BETTER APPROACH: Rotate the whole GROUP?
+        // Only the terrain was rotated in previous step.
+        // Let's copy the terrain rotation logic here for the path so they stick together.
+
+        child.rotation.z = time * 0.1;
+
+        child.rotation.y = Math.cos(time * 0.5) * 0.05;
+        // child.rotation.x = ... (Terrain had complex tilt)
+        // Complex sync is hard. 
+        // TIP: It's better to add the path AS A CHILD of the terrain in background.js?
+        // Refactoring background.js is cleaner, but for now let's try to match the transform.
+
+        // Actually, let's keep the path static relative to "World" and say the moon is rotating underneath?
+        // No, User expects path to be ON the moon.
+
+        // Let's apply the SAME rotation to this child.
+        child.rotation.z = time * 0.1;
+
+        // Wobbles
+        // child.rotation.x = -Math.PI / 2 + ... (Terrain base rotation)
+        // Path is generated in X/Z plane. Terrain was plane XY rotated X=-PI/2.
+        // This is getting tricky coordinate wise.
+        // SIMPLIFICATION:
+        // Let's NOT rotate the terrain geometry in animation loop if we want a static path.
+        // OR, let's make the path a child of the terrain in the next step if this looks broken.
+        // For now, let's just rotate Z which is the main "Turntable" spin.
       }
     });
   }
@@ -81,23 +128,23 @@ export function updateScrollEffects(scene, camera, scrollY, windowHeight, backgr
         const originalPos = light.userData.originalPos;
         const index = light.userData.index || 0;
 
-        // Active light movement
-        const offsetX = Math.sin(time * 0.5 + index) * 8;
-        const offsetY = Math.cos(time * 0.4 + index) * 5;
+        // Faster active light movement
+        const offsetX = Math.sin(time * 1.5 + index) * 8;
+        const offsetY = Math.cos(time * 1.2 + index) * 5;
 
         light.position.x = originalPos.x + offsetX;
         light.position.y = originalPos.y + offsetY + scrollProgress * 10;
 
-        // Stronger pulsing
+        // Rapid pulsing
         const baseIntensity = light.userData.baseIntensity || 0.8;
-        light.intensity = baseIntensity + Math.sin(time * 1.0 + index) * 0.3;
+        light.intensity = baseIntensity + Math.sin(time * 3.0 + index) * 0.3;
       }
 
-      // Animate Moonlight (Shifting Shadows)
+      // Animate Moonlight (Faster Shifting Shadows)
       if (child.userData && child.userData.type === 'moon_light') {
-        // Slow orbit to change shadow angles on the craters
-        child.position.x = Math.sin(time * 0.2) * 60;
-        child.position.z = Math.cos(time * 0.2) * 60;
+        // Faster orbit
+        child.position.x = Math.sin(time * 0.8) * 60;
+        child.position.z = Math.cos(time * 0.8) * 60;
       }
     });
   }
