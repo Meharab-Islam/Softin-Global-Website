@@ -16,19 +16,20 @@
   animation: fadeInUp 1s ease;
 }
 
-.hero-title {
-  font-size: clamp(3rem, 8vw, 6rem);
+.hero-content h1 {
+  font-size: 4rem;
   font-weight: 800;
-  margin-bottom: 2rem;
-  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  color: #ffffff;
+  /* pure white */
 }
 
 .title-line {
   display: block;
-  background: var(--gradient-1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  /* Removed gradient properties */
+  color: #ffffff;
+  /* Set text color to white */
   animation: slideInLeft 1s ease;
 }
 
@@ -135,7 +136,8 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: var(--gradient-1);
+  background: #3a7bd5;
+  /* Changed from var(--gradient-1) to flat color */
   transition: left 0.3s ease;
   z-index: -1;
 }
@@ -153,6 +155,42 @@
 
 .btn-see-more:hover {
   gap: 1rem;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: #3a7bd5;
+  /* Flat blue */
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  /* Ensure no gradient border remains */
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(58, 123, 213, 0.4);
+}
+
+.secondary-button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: transparent;
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.secondary-button:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .contact-content {
@@ -225,12 +263,19 @@
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateX(-50%) translateY(0);
   }
+
   40% {
     transform: translateX(-50%) translateY(-10px);
   }
+
   60% {
     transform: translateX(-50%) translateY(-5px);
   }
@@ -241,6 +286,7 @@
     opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
+
   100% {
     opacity: 0;
     transform: translateX(-50%) translateY(20px);
@@ -262,4 +308,3 @@
     grid-template-columns: 1fr;
   }
 }
-

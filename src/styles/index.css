@@ -5,15 +5,20 @@
 }
 
 :root {
-  --primary-color: #6366f1;
-  --secondary-color: #8b5cf6;
+  --primary-color: #3a7bd5;
+  /* Flat blue */
+  --secondary-color: #6c5ce7;
   --accent-color: #ec4899;
   --bg-color: #0a0e13;
   --surface-color: #1a1f2e;
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
-  --gradient-1: linear-gradient(135deg, #ff6b9d 0%, #4ecdc4 50%, #ffe66d 100%);
-  --gradient-2: linear-gradient(135deg, #a8e6cf 0%, #ff8b94 50%, #95e1d3 100%);
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0b0;
+  --dark-bg: #050510;
+  --dark-surface: #0a0a15;
+  --gradient-1: #aaccff;
+  /* Replaced gradient with flat light blue */
+  --gradient-2: #3a7bd5;
+  /* Replaced gradient with flat blue */
 }
 
 html {
