@@ -45,40 +45,42 @@ export default function WorkDetail() {
       <main className="main-content">
         <section className="detail-page">
           <div className="container">
-            <button 
-              onClick={() => navigate('/#works')} 
+            <button
+              onClick={() => navigate('/#works')}
               className="back-button"
             >
               ← Back to Works
             </button>
-            <div className="detail-header">
-              <h1>{work.title}</h1>
-              <div className="meta">
-                <span>{work.category}</span> • 
-                <span>{work.client}</span> • 
-                <span>{work.year}</span> • 
-                <span>{work.duration}</span>
+            <div className="glass-container">
+              <div className="detail-header">
+                <h1>{work.title}</h1>
+                <div className="meta">
+                  <span>{work.category}</span> •
+                  <span>{work.client}</span> •
+                  <span>{work.year}</span> •
+                  <span>{work.duration}</span>
+                </div>
               </div>
-            </div>
-            <img src={work.image} alt={work.title} className="detail-image" />
-            <div className="detail-content">
-              <p>{work.description}</p>
-              <h2>Technologies Used</h2>
-              <div className="work-tech" style={{ margin: '2rem 0' }}>
-                {work.technologies.map((tech, index) => (
-                  <span key={index} className="tech-tag">{tech}</span>
-                ))}
-              </div>
-              <h2>Results</h2>
-              <div className="results-grid">
-                {Object.entries(work.results).map(([key, value]) => (
-                  <div key={key} className="result-card">
-                    <div className="result-value">{value}</div>
-                    <div className="result-label">
-                      {key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+              <img src={work.image} alt={work.title} className="detail-image" />
+              <div className="detail-content">
+                <p>{work.description}</p>
+                <h2>Technologies Used</h2>
+                <div className="work-tech" style={{ margin: '2rem 0' }}>
+                  {work.technologies.map((tech, index) => (
+                    <span key={index} className="tech-tag">{tech}</span>
+                  ))}
+                </div>
+                <h2>Results</h2>
+                <div className="results-grid">
+                  {Object.entries(work.results).map(([key, value]) => (
+                    <div key={key} className="result-card">
+                      <div className="result-value">{value}</div>
+                      <div className="result-label">
+                        {key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>

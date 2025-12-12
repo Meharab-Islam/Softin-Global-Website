@@ -38,12 +38,31 @@
   display: block;
 }
 
+.glass-container {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 3rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
 .detail-content {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   line-height: 1.8;
   color: var(--text-secondary);
   font-size: 1.1rem;
+}
+
+.detail-content h2,
+.detail-content h3 {
+  color: var(--text-primary);
+  background: linear-gradient(to right, #fff, #ccc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .detail-content p {
@@ -146,4 +165,3 @@
   gap: 0.5rem;
   margin-top: 1rem;
 }
-

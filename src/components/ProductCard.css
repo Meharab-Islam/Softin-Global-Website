@@ -1,9 +1,11 @@
 .product-card {
-  background: var(--dark-surface);
+  background: rgba(26, 31, 46, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 20px;
   overflow: hidden;
   transition: all 0.3s ease;
-  border: 1px solid rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
 }
 
@@ -71,4 +73,3 @@
   align-items: center;
   gap: 0.5rem;
 }
-

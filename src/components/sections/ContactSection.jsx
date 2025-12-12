@@ -10,7 +10,7 @@ export default function ContactSection({ onSubmit }) {
             Let's discuss how we can help transform your business
           </p>
         </div>
-        <div className="contact-content">
+        <div className="contact-content glass-card">
           <div className="contact-info">
             <div className="contact-item">
               <div className="contact-icon">📧</div>

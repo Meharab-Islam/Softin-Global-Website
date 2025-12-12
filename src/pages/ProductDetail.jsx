@@ -51,40 +51,42 @@ export default function ProductDetail() {
       <main className="main-content">
         <section className="detail-page">
           <div className="container">
-            <button 
-              onClick={() => navigate('/#products')} 
+            <button
+              onClick={() => navigate('/#products')}
               className="back-button"
             >
               ← Back to Products
             </button>
-            <div className="detail-header">
-              <h1>{product.name}</h1>
-              <div className="meta">
-                <span>{product.category}</span> • 
-                <span>{product.price}</span> • 
-                <span>Launched: {new Date(product.launch_date).toLocaleDateString()}</span>
+            <div className="glass-container">
+              <div className="detail-header">
+                <h1>{product.name}</h1>
+                <div className="meta">
+                  <span>{product.category}</span> •
+                  <span>{product.price}</span> •
+                  <span>Launched: {new Date(product.launch_date).toLocaleDateString()}</span>
+                </div>
               </div>
-            </div>
-            <img src={product.image} alt={product.name} className="detail-image" />
-            <div className="detail-content">
-              <p>{product.description}</p>
-              <div className="product-rating" style={{ margin: '2rem 0' }}>
-                <span className="stars">{renderStars(product.rating)}</span>
-                <span>{product.rating} out of 5 ({product.reviews} reviews)</span>
-              </div>
-              <h2>Key Features</h2>
-              <ul className="features-list">
-                {product.features.map((feature, index) => (
-                  <li key={index} className="feature-item">
-                    <span className="feature-check">✓</span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              <div className="cta-section">
-                <a href="/#contact" className="btn btn-primary">
-                  Get Started
-                </a>
+              <img src={product.image} alt={product.name} className="detail-image" />
+              <div className="detail-content">
+                <p>{product.description}</p>
+                <div className="product-rating" style={{ margin: '2rem 0' }}>
+                  <span className="stars">{renderStars(product.rating)}</span>
+                  <span>{product.rating} out of 5 ({product.reviews} reviews)</span>
+                </div>
+                <h2>Key Features</h2>
+                <ul className="features-list">
+                  {product.features.map((feature, index) => (
+                    <li key={index} className="feature-item">
+                      <span className="feature-check">✓</span>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                <div className="cta-section">
+                  <a href="/#contact" className="btn btn-primary">
+                    Get Started
+                  </a>
+                </div>
               </div>
             </div>
           </div>

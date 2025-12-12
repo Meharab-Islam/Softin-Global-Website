@@ -31,9 +31,15 @@ export default function Navbar() {
 
   const handleSectionClick = (e, sectionId) => {
     closeMobileMenu();
+    e.preventDefault();
+
     if (location.pathname !== '/') {
       navigate('/');
-      setTimeout(() => handleHashLink(e, sectionId), 100);
+      // Wait for navigation and render
+      setTimeout(() => {
+        // Pass the event object as null or a mock since the original event is stale
+        handleHashLink({ preventDefault: () => { } }, sectionId);
+      }, 400);
     } else {
       handleHashLink(e, sectionId);
     }
@@ -49,8 +55,8 @@ export default function Navbar() {
         </div>
         <ul className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
           <li>
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className={`nav-link ${isActive('/') ? 'active' : ''}`}
               onClick={closeMobileMenu}
             >
@@ -58,8 +64,8 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <a 
-              href="#services" 
+            <a
+              href="#services"
               className="nav-link"
               onClick={(e) => handleSectionClick(e, 'services')}
             >
@@ -67,8 +73,8 @@ export default function Navbar() {
             </a>
           </li>
           <li>
-            <a 
-              href="#works" 
+            <a
+              href="#works"
               className="nav-link"
               onClick={(e) => handleSectionClick(e, 'works')}
             >
@@ -76,8 +82,8 @@ export default function Navbar() {
             </a>
           </li>
           <li>
-            <a 
-              href="#products" 
+            <a
+              href="#products"
               className="nav-link"
               onClick={(e) => handleSectionClick(e, 'products')}
             >
@@ -85,8 +91,8 @@ export default function Navbar() {
             </a>
           </li>
           <li>
-            <a 
-              href="#blogs" 
+            <a
+              href="#blogs"
               className="nav-link"
               onClick={(e) => handleSectionClick(e, 'blogs')}
             >
@@ -94,8 +100,8 @@ export default function Navbar() {
             </a>
           </li>
           <li>
-            <a 
-              href="#contact" 
+            <a
+              href="#contact"
               className="nav-link"
               onClick={(e) => handleSectionClick(e, 'contact')}
             >
@@ -103,7 +109,7 @@ export default function Navbar() {
             </a>
           </li>
         </ul>
-        <div 
+        <div
           className={`hamburger ${isMobileMenuOpen ? 'active' : ''}`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >

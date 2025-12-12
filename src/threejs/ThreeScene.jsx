@@ -3,6 +3,7 @@ import { initScene } from './sceneSetup';
 import { createBackground } from './background';
 import { createLights } from './lights';
 import { animateScene } from './animation';
+import { setMousePosition } from './scrollEffects';
 
 export default function ThreeScene() {
   const canvasRef = useRef(null);
@@ -19,7 +20,7 @@ export default function ThreeScene() {
       sceneRef.current = { scene, camera, renderer };
 
       // Clear any existing objects from scene
-      while(scene.children.length > 0) {
+      while (scene.children.length > 0) {
         scene.remove(scene.children[0]);
       }
 
@@ -34,20 +35,30 @@ export default function ThreeScene() {
       // Start animation
       const cleanup = animateScene(scene, camera, renderer, background);
 
-    // Handle resize
-    const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
+      // Handle resize
+      const handleResize = () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      };
 
-    window.addEventListener('resize', handleResize);
+      // Handle mouse move
+      const handleMouseMove = (event) => {
+        // Normalize mouse position from -1 to 1
+        const x = (event.clientX / window.innerWidth) * 2 - 1;
+        const y = -(event.clientY / window.innerHeight) * 2 + 1;
+        setMousePosition(x, y);
+      };
+
+      window.addEventListener('resize', handleResize);
+      window.addEventListener('mousemove', handleMouseMove);
 
       return () => {
         cleanup();
         window.removeEventListener('resize', handleResize);
+        window.removeEventListener('mousemove', handleMouseMove);
         // Clean up scene
-        while(scene.children.length > 0) {
+        while (scene.children.length > 0) {
           const child = scene.children[0];
           if (child.geometry) child.geometry.dispose();
           if (child.material) {

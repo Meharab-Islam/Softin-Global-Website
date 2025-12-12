@@ -45,29 +45,31 @@ export default function BlogDetail() {
       <main className="main-content">
         <section className="detail-page">
           <div className="container">
-            <button 
-              onClick={() => navigate('/#blogs')} 
+            <button
+              onClick={() => navigate('/#blogs')}
               className="back-button"
             >
               ← Back to Blogs
             </button>
-            <div className="detail-header">
-              <span className="blog-category">{blog.category}</span>
-              <h1>{blog.title}</h1>
-              <div className="meta">
-                <span>By {blog.author}</span> • 
-                <span>{new Date(blog.date).toLocaleDateString()}</span>
+            <div className="glass-container">
+              <div className="detail-header">
+                <span className="blog-category">{blog.category}</span>
+                <h1>{blog.title}</h1>
+                <div className="meta">
+                  <span>By {blog.author}</span> •
+                  <span>{new Date(blog.date).toLocaleDateString()}</span>
+                </div>
               </div>
-            </div>
-            <img src={blog.image} alt={blog.title} className="detail-image" />
-            <div className="detail-content">
-              <p>{blog.content}</p>
-              <div className="blog-tags">
-                <h3>Tags</h3>
-                <div className="tags-container">
-                  {blog.tags.map((tag, index) => (
-                    <span key={index} className="tech-tag">{tag}</span>
-                  ))}
+              <img src={blog.image} alt={blog.title} className="detail-image" />
+              <div className="detail-content">
+                <p>{blog.content}</p>
+                <div className="blog-tags">
+                  <h3>Tags</h3>
+                  <div className="tags-container">
+                    {blog.tags.map((tag, index) => (
+                      <span key={index} className="tech-tag">{tag}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

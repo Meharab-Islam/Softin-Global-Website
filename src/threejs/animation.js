@@ -1,40 +1,56 @@
 import * as THREE from 'three';
-import { updateScrollEffects, setMousePosition } from './scrollEffects';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
+import { updateScrollEffects } from './scrollEffects';
 
-let mouse = { x: 0, y: 0 };
 let scrollY = 0;
 let animationId = null;
 let time = 0;
+let composer = null;
 
 export function animateScene(scene, camera, renderer, background) {
-  const handleMouseMove = (e) => {
-    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-    setMousePosition(mouse.x, mouse.y);
-  };
+  // Initialize Bloom
+  const renderScene = new RenderPass(scene, camera);
+
+  const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    0.1, // strength (Very subtle bloom for softness)
+    0.1, // radius
+    0.95 // threshold 
+  );
+
+  composer = new EffectComposer(renderer);
+  composer.addPass(renderScene);
+  composer.addPass(bloomPass);
 
   const handleScroll = () => {
     scrollY = window.scrollY;
   };
 
-  window.addEventListener('mousemove', handleMouseMove);
+  const handleResize = () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    composer.setSize(width, height);
+  };
+
   window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('resize', handleResize);
 
   function animate() {
     animationId = requestAnimationFrame(animate);
     time += 0.015;
 
     const windowHeight = window.innerHeight;
-    
-    // Enhanced scroll and mouse-based effects
-    updateScrollEffects(scene, camera, scrollY, windowHeight, background, time, mouse.x, mouse.y);
 
-    // Smooth camera look at center with mouse influence
-    const lookAtX = mouse.x * 0.5;
-    const lookAtY = mouse.y * 0.5;
-    camera.lookAt(lookAtX, lookAtY, -50);
+    // Scroll-based effects
+    updateScrollEffects(scene, camera, scrollY, windowHeight, background, time);
 
-    renderer.render(scene, camera);
+    // Camera looks at center
+    camera.lookAt(0, 0, -50);
+
+    // Use composer instead of renderer
+    composer.render();
   }
 
   animate();
@@ -43,7 +59,10 @@ export function animateScene(scene, camera, renderer, background) {
     if (animationId) {
       cancelAnimationFrame(animationId);
     }
-    window.removeEventListener('mousemove', handleMouseMove);
     window.removeEventListener('scroll', handleScroll);
+    window.removeEventListener('resize', handleResize);
+    if (composer) {
+      composer.dispose();
+    }
   };
 }
