@@ -1,3 +1,5 @@
+import * as THREE from 'three';
+
 // Professional scroll and mouse-based effects
 
 let sectionProgress = {
@@ -54,9 +56,14 @@ export function updateScrollEffects(scene, camera, scrollY, windowHeight, backgr
         // Keep the breathing/hover effect but smoother
         child.position.y = -40 + Math.sin(time * 0.5) * 5;
 
-        // Add a spiral tilt wobble
-        child.rotation.x = -Math.PI / 2 + 0.2 + Math.sin(time * 0.5) * 0.05;
-        child.rotation.y = Math.cos(time * 0.5) * 0.05;
+        // Interactive Mouse Tilt
+        // We blend the automatic wobble with user input
+        const targetTiltX = mouse.y * 0.1; // Up/Down tilt
+        const targetTiltY = mouse.x * 0.1; // Left/Right tilt
+
+        // Add a spiral tilt wobble + Mouse Influence
+        child.rotation.x = -Math.PI / 2 + 0.2 + Math.sin(time * 0.5) * 0.05 + targetTiltX;
+        child.rotation.y = Math.cos(time * 0.5) * 0.05 + targetTiltY;
       }
 
       // 2. Starfield (Interactive Sky)
@@ -76,46 +83,47 @@ export function updateScrollEffects(scene, camera, scrollY, windowHeight, backgr
       // 3. Progressive Path
       if (type === 'scroll_path') {
         const count = child.geometry.attributes.position.count;
-        // Calculate how many points to show based on scroll
-        // Map scroll 0..1 to points 0..count
         const drawCount = Math.floor(scrollProgress * count);
         child.geometry.setDrawRange(0, drawCount);
-
-        // Rotate with the terrain to match the "turntable" effect?
-        // YES, otherwise the path will slide off the terrain!
-        // We need to match the terrain rotation exactly.
-        // Terrain rotation logic was:
-        // child.rotation.z = time * 0.1; (for terrain)
-        // Wait, the path is separate. 
-        // If terrain rotates Z, and path is in the same group, it stays relative?
-        // No, they are siblings in backgroundGroup.
-        // If we rotate the sibling (terrain) but not the path, they desync.
-        // BETTER APPROACH: Rotate the whole GROUP?
-        // Only the terrain was rotated in previous step.
-        // Let's copy the terrain rotation logic here for the path so they stick together.
-
         child.rotation.z = time * 0.1;
+      }
 
-        child.rotation.y = Math.cos(time * 0.5) * 0.05;
-        // child.rotation.x = ... (Terrain had complex tilt)
-        // Complex sync is hard. 
-        // TIP: It's better to add the path AS A CHILD of the terrain in background.js?
-        // Refactoring background.js is cleaner, but for now let's try to match the transform.
+      // 4. Asteroids - REMOVED
 
-        // Actually, let's keep the path static relative to "World" and say the moon is rotating underneath?
-        // No, User expects path to be ON the moon.
+      // 5. Shooting Stars
+      if (type === 'shooting_stars_group') {
+        child.children.forEach(star => {
+          const data = star.userData;
 
-        // Let's apply the SAME rotation to this child.
-        child.rotation.z = time * 0.1;
+          if (data.active) {
+            star.position.add(data.velocity);
+            star.lookAt(star.position.clone().add(data.velocity));
 
-        // Wobbles
-        // child.rotation.x = -Math.PI / 2 + ... (Terrain base rotation)
-        // Path is generated in X/Z plane. Terrain was plane XY rotated X=-PI/2.
-        // This is getting tricky coordinate wise.
-        // SIMPLIFICATION:
-        // Let's NOT rotate the terrain geometry in animation loop if we want a static path.
-        // OR, let's make the path a child of the terrain in the next step if this looks broken.
-        // For now, let's just rotate Z which is the main "Turntable" spin.
+            // Reset if out of bounds
+            if (star.position.y < -50 || star.position.z > 50) {
+              data.active = false;
+              data.timer = Math.random() * 200 + 100; // Delay next launch
+              star.visible = false;
+            }
+          } else {
+            data.timer--;
+            if (data.timer <= 0) {
+              // Launch!
+              star.position.set(
+                (Math.random() - 0.5) * 200,
+                40 + Math.random() * 30,
+                -100
+              );
+              data.velocity.set(
+                (Math.random() - 0.5) * 3, // X
+                -2 - Math.random() * 3,    // Y (Fast down)
+                2 + Math.random() * 3      // Z (Fast forward)
+              );
+              data.active = true;
+              star.visible = true;
+            }
+          }
+        });
       }
     });
   }

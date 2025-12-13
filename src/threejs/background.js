@@ -66,10 +66,10 @@ export function createBackground() {
   const planeMaterial = new THREE.MeshStandardMaterial({
     map: moonTexture,
     normalMap: moonNormal,
-    normalScale: new THREE.Vector2(2, 2), // Stronger bumps for hills
-    color: 0x888888,
-    roughness: 0.9,
-    metalness: 0.1,
+    normalScale: new THREE.Vector2(3, 3), // Stronger normals
+    color: 0xaaaaaa, // Lighter base to pick up rim light
+    roughness: 0.7, // Slightly smoother for highlights
+    metalness: 0.3, // Metallic touch for sci-fi feel
     flatShading: false,
     side: THREE.DoubleSide
   });
@@ -90,8 +90,7 @@ export function createBackground() {
 
   for (let i = 0; i < starCount; i++) {
     const i3 = i * 3;
-    // Spherical distribution for a surrounding sky
-    const r = 100 + Math.random() * 200; // Distant stars
+    const r = 100 + Math.random() * 200;
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.acos(2 * Math.random() - 1);
 
@@ -101,11 +100,10 @@ export function createBackground() {
 
     starSizes[i] = Math.random() * 1.5;
 
-    // Star colors (White to Blueish)
     const shade = 0.8 + Math.random() * 0.2;
     starColors[i3] = shade;
     starColors[i3 + 1] = shade;
-    starColors[i3 + 2] = shade + (Math.random() < 0.3 ? 0.2 : 0); // Occasional blue tint
+    starColors[i3 + 2] = shade + (Math.random() < 0.3 ? 0.2 : 0);
   }
 
   starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
@@ -115,7 +113,7 @@ export function createBackground() {
   const starMat = new THREE.PointsMaterial({
     size: 1,
     vertexColors: true,
-    map: getSparkleTexture(), // Use a simple glow texture
+    map: getSparkleTexture(),
     transparent: true,
     opacity: 0.8,
     sizeAttenuation: true,
@@ -125,6 +123,48 @@ export function createBackground() {
   const starField = new THREE.Points(starGeo, starMat);
   starField.userData = { type: 'starfield' };
   backgroundGroup.add(starField);
+
+  // 2b. Nebula Clouds (Soft Background)
+  const nebulaCount = 15; // Few large particles
+  const nebulaGeo = new THREE.BufferGeometry();
+  const nebulaPos = new Float32Array(nebulaCount * 3);
+  const nebulaColors = new Float32Array(nebulaCount * 3);
+
+  for (let i = 0; i < nebulaCount; i++) {
+    const i3 = i * 3;
+    // Spread wildly in background
+    nebulaPos[i3] = (Math.random() - 0.5) * 300;
+    nebulaPos[i3 + 1] = (Math.random() - 0.5) * 200;
+    nebulaPos[i3 + 2] = -100 - Math.random() * 100; // Far behind
+
+    // Deep Cosmic Colors (Purple/Blue/Pink)
+    const color = new THREE.Color();
+    color.setHSL(Math.random() * 0.2 + 0.6, 0.8, 0.4); // Blue/Purple Hue
+    nebulaColors[i3] = color.r;
+    nebulaColors[i3 + 1] = color.g;
+    nebulaColors[i3 + 2] = color.b;
+  }
+
+  nebulaGeo.setAttribute('position', new THREE.BufferAttribute(nebulaPos, 3));
+  nebulaGeo.setAttribute('color', new THREE.BufferAttribute(nebulaColors, 3));
+
+  const cloudTexture = textureLoader.load('/textures/cloud_texture.png');
+
+  const nebulaMat = new THREE.PointsMaterial({
+    size: 100, // Very large
+    map: cloudTexture,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.15, // Subtle
+    depthWrite: false, // Don't occlude
+    blending: THREE.AdditiveBlending
+  });
+
+  const nebula = new THREE.Points(nebulaGeo, nebulaMat);
+  nebula.userData = { type: 'nebula' };
+  backgroundGroup.add(nebula);
+
+  // 2c. Space Dust - REMOVED per user request
 
   // 3. Progressive Scrolling Path
   // Create a winding curve through the terrain
@@ -189,11 +229,55 @@ export function createBackground() {
     opacity: 0.8
   });
 
-  const pathLine = new THREE.Line(pathGeo, pathMat);
-  pathLine.userData = { type: 'scroll_path' };
-  backgroundGroup.add(pathLine);
+  // 4. Floating Asteroids - REMOVED per user request
+  // (Code removed to clean up sky)
+
+  // 5. Shooting Stars (Dynamic Lines)
+  const shootingStarCount = 20;
+  const shootingStarsGroup = new THREE.Group();
+  shootingStarsGroup.userData = { type: 'shooting_stars_group' };
+
+  const lineGeo = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(0, 0, 0),
+    new THREE.Vector3(0, 0, 10) // Long tail
+  ]);
+  const lineMat = new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.8, transparent: true });
+
+  for (let i = 0; i < shootingStarCount; i++) {
+    const star = new THREE.Line(lineGeo, lineMat);
+
+    // Initialize far away
+    resetShootingStar(star);
+    // Stagger start times by placing them far
+    star.position.x = 1000;
+
+    shootingStarsGroup.add(star);
+  }
+  backgroundGroup.add(shootingStarsGroup);
 
   return backgroundGroup;
+}
+
+function resetShootingStar(star) {
+  star.position.set(
+    (Math.random() - 0.5) * 200, // Random X
+    20 + Math.random() * 40,     // High in sky
+    -50 - Math.random() * 50     // Behind
+  );
+
+  // Random direction (mostly downward/diagonal)
+  star.userData = {
+    velocity: new THREE.Vector3(
+      (Math.random() - 0.5) * 2,  // Drift X
+      -1 - Math.random() * 2,     // Fall Y
+      Math.random() * 2           // Toward camera Z
+    ).multiplyScalar(2), // Speed
+    active: false,
+    timer: Math.random() * 200 // Random delay before launch
+  };
+
+  star.scale.setScalar(1);
+  star.visible = false;
 }
 
 // Helper for star texture

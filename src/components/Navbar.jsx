@@ -10,7 +10,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const [isVisible, setIsVisible] = useState(true);
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState('home'); // Default to home
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -43,7 +43,7 @@ export default function Navbar() {
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
     // Observe all sections
-    const sections = ['hero', 'services', 'works', 'products', 'blogs', 'contact'];
+    const sections = ['home', 'services', 'works', 'products', 'blogs', 'contact'];
     sections.forEach(id => {
       const element = document.getElementById(id);
       if (element) observer.observe(element);
@@ -84,9 +84,9 @@ export default function Navbar() {
         <ul className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
           <li>
             <a
-              href="#hero"
-              className={`nav-link ${activeSection === 'hero' ? 'active' : ''}`}
-              onClick={(e) => handleSectionClick(e, 'hero')}
+              href="#home"
+              className={`nav-link ${activeSection === 'home' ? 'active' : ''}`}
+              onClick={(e) => handleSectionClick(e, 'home')}
             >
               Home
             </a>

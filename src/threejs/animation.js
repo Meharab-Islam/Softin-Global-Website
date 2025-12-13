@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
-import { updateScrollEffects } from './scrollEffects';
+import { updateScrollEffects, setMousePosition } from './scrollEffects';
 
 let scrollY = 0;
 let animationId = null;
@@ -28,6 +28,13 @@ export function animateScene(scene, camera, renderer, background) {
     scrollY = window.scrollY;
   };
 
+  const handleMouseMove = (event) => {
+    // Normalize mouse position from -1 to 1
+    const x = (event.clientX / window.innerWidth) * 2 - 1;
+    const y = -(event.clientY / window.innerHeight) * 2 + 1;
+    setMousePosition(x, y);
+  };
+
   const handleResize = () => {
     const width = window.innerWidth;
     const height = window.innerHeight;
@@ -35,6 +42,7 @@ export function animateScene(scene, camera, renderer, background) {
   };
 
   window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('mousemove', handleMouseMove);
   window.addEventListener('resize', handleResize);
 
   function animate() {
@@ -60,6 +68,7 @@ export function animateScene(scene, camera, renderer, background) {
       cancelAnimationFrame(animationId);
     }
     window.removeEventListener('scroll', handleScroll);
+    window.removeEventListener('mousemove', handleMouseMove);
     window.removeEventListener('resize', handleResize);
     if (composer) {
       composer.dispose();
