@@ -1,0 +1,84 @@
+/* Global Animation Keyframes */
+
+/* Fade Up Entry */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-up {
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.fade-up.visible {
+    animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Text Emerge (Staggered Reveal) */
+.reveal-text {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transform: translateY(100%);
+    opacity: 0;
+    transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.reveal-text.visible {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Scale In (Images) */
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.scale-in {
+    opacity: 0;
+}
+
+.scale-in.visible {
+    animation: scaleIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Stagger Delays */
+.delay-100 {
+    animation-delay: 0.1s;
+    transition-delay: 0.1s;
+}
+
+.delay-200 {
+    animation-delay: 0.2s;
+    transition-delay: 0.2s;
+}
+
+.delay-300 {
+    animation-delay: 0.3s;
+    transition-delay: 0.3s;
+}
+
+.delay-400 {
+    animation-delay: 0.4s;
+    transition-delay: 0.4s;
+}
+
+.delay-500 {
+    animation-delay: 0.5s;
+    transition-delay: 0.5s;
+}

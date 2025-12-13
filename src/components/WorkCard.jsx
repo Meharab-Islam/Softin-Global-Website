@@ -10,24 +10,26 @@ export default function WorkCard({ work }) {
   };
 
   return (
-    <div className="work-card" onClick={handleClick}>
-      <img src={work.image} alt={work.title} className="work-image" />
+    <div className="work-card fade-up" onClick={handleClick}>
+      <div className="work-category">{work.category}</div>
+      <div className="work-image-container">
+        <img src={work.image} alt={work.title} className="work-image" />
+      </div>
       <div className="work-content">
-        <span className="work-category">{work.category}</span>
         <h3>{work.title}</h3>
         <p>{work.description}</p>
         <div className="work-tech">
-          {work.technologies.map((tech, index) => (
-            <span key={index} className="tech-tag">{tech}</span>
+          {work.technologies.slice(0, 3).map((tech, index) => (
+            <span key={index} className="tech-tag">#{tech}</span>
           ))}
         </div>
-        <a href={`/work/${work.id}`} className="work-link" onClick={(e) => {
-          e.preventDefault();
-          handleClick();
-        }}>
-          View Details →
-        </a>
       </div>
+      <a href={`/work/${work.id}`} className="work-link" onClick={(e) => {
+        e.preventDefault();
+        handleClick();
+      }}>
+        →
+      </a>
     </div>
   );
 }

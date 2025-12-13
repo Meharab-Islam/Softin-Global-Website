@@ -56,6 +56,13 @@
   /* Gradient removed */
 }
 
+.logo a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .nav-menu {
   display: flex;
   list-style: none;

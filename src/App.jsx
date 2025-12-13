@@ -9,6 +9,8 @@ import BlogDetail from './pages/BlogDetail';
 import AllWorks from './pages/AllWorks';
 import AllProducts from './pages/AllProducts';
 import AllBlogs from './pages/AllBlogs';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
         <Route path="/works" element={<AllWorks />} />
         <Route path="/products" element={<AllProducts />} />
         <Route path="/blogs" element={<AllBlogs />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
       </Routes>
       <Footer />
     </div>
