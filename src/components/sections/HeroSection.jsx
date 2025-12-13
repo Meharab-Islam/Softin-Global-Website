@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useScrollAnimation } from '../../hooks/useScrollAnimation';
-import '../HeroSection.css';
+import './HeroSection.css';
 
 export default function HeroSection() {
   const navigate = useNavigate();

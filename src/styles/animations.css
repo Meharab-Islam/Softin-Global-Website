@@ -23,15 +23,14 @@
 }
 
 /* Text Emerge (Staggered Reveal) */
+/* Text Emerge (Simplified) */
 .reveal-text {
-    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-    transform: translateY(100%);
+    transform: translateY(30px);
     opacity: 0;
-    transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal-text.visible {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     transform: translateY(0);
     opacity: 1;
 }

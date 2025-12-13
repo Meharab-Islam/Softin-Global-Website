@@ -19,8 +19,8 @@ export function useScrollAnimation() {
                 });
             },
             {
-                threshold: 0.15, // Trigger when 15% of element is visible
-                rootMargin: '0px 0px -50px 0px' // Offset to trigger slightly before bottom
+                threshold: 0, // Trigger immediately when any part is visible
+                rootMargin: '0px'
             }
         );
 
